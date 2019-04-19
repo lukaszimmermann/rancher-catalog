@@ -1,18 +1,7 @@
 version: '2'
 
-volumes:
-    broker:
-        driver: local
-    app:
-        driver: local
-    db:
-        driver: local
-    results:
-        driver: local
-
 services:
   broker:
-    container_name: mayan-edms-broker
     image: healthcheck/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: mayan
@@ -21,12 +10,10 @@ services:
     volumes:
       - broker:/var/lib/rabbitmq
   results:
-    container_name: mayan-edms-results
     image: healthcheck/redis
     volumes:
       - results:/data
   db:
-    container_name: mayan-edms-db
     image: healthcheck/postgres
     environment:
       POSTGRES_DB: mayan
@@ -35,12 +22,7 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
   mayan-edms:
-    container_name: mayan-edms-app
     image: mayanedms/mayanedms:latest
-    depends_on:
-      - broker
-      - db
-      - results
     environment:
       MAYAN_BROKER_URL: amqp://mayan:mayan@broker:5672/mayan
       MAYAN_CELERY_RESULT_BACKEND: redis://results:6379/0
@@ -53,3 +35,9 @@ services:
       - "80:8000"
     volumes:
       - app:/var/lib/mayan
+
+volumes:
+    broker:
+    app:
+    db:
+    results:
