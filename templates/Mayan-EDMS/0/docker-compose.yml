@@ -22,7 +22,7 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
   mayan-edms:
-    image: mayanedms/mayanedms:latest
+    image: lukaszimmermann/mayanedms:latest
     environment:
       MAYAN_BROKER_URL: amqp://mayan:mayan@broker:5672/mayan
       MAYAN_CELERY_RESULT_BACKEND: redis://results:6379/0
