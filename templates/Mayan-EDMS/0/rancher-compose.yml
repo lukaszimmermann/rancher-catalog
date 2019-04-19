@@ -1,0 +1,16 @@
+version: '2'
+catalog:
+  name: Mayan EDMS
+  version: 1.0.0
+  description: |
+    Free Open Source Document Management System.
+
+services:
+  mayan:
+    scale: 1
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 80
+      unhealthy_threshold: 3
+      interval: 2000
