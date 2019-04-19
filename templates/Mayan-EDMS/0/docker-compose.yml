@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 
 volumes:
     broker:
@@ -38,12 +38,9 @@ services:
     container_name: mayan-edms-app
     image: mayanedms/mayanedms:latest
     depends_on:
-      broker:
-        condition: service_healthy
-      db:
-        condition: service_healthy
-      results:
-        condition: service_healthy
+      - broker
+      - db
+      - results
     environment:
       MAYAN_BROKER_URL: amqp://mayan:mayan@broker:5672/mayan
       MAYAN_CELERY_RESULT_BACKEND: redis://results:6379/0
